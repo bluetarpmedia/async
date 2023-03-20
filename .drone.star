@@ -9,7 +9,7 @@ _triggers = {"branch": ["master", "develop", "drone*", "bugfix/*", "feature/*", 
 _container_tag = '65e51d3af7132dcb1001249629c24cc59b934cb6'
 
 
-def linux_cmake(name, image, packages):
+def linux_cmake(ctx, name, image, packages):
   return {
     "name": name,
       "kind": "pipeline",
@@ -25,13 +25,22 @@ def linux_cmake(name, image, packages):
       "node": {},
       "steps" : [
       {
-        "name": "Install Cmake",
+        "name": "Install Dependencies",
         "image": image,
-        "pull": "",
+        "pull": "if-not-exists",
         "commands": [
-          "wget https://github.com/Kitware/CMake/releases/download/v3.26.0/cmake-3.26.0-linux-x86_64.sh",
-          "chmod +x cmake-3.26.0-linux-x86_64.sh",
-          "./cmake-3.26.0-linux-x86_64.sh"
+          "dnf install -y " + " ".join(packages)
+        ]
+      },
+      {
+        "name": "Get boost",
+        "image": image,
+        "pull": "if-not-exists",
+        "commands": [
+          "cd ..",
+          "echo '" + ctx + "'"
+          "git clone -b $branch --depth 1 https://github.com/boostorg/boost.git boost",
+          "cd boost-root"
         ]
       }]
     }
@@ -41,9 +50,10 @@ def linux_cmake(name, image, packages):
 
 def main(ctx):
   return [
-    linux_cmake(name="gcc 10 (ubuntu 22)",
-                image="docker.io/library/gcc:10",
-                packages="cmake")
+    linux_cmake(ctx,
+                name="gcc 10 (ubuntu 22)",
+                image="docker.io/library/fedora:36",
+                packages=["g++", "cmake", "git"])
   ]
 #   return [
 #       # CMake Linux
