@@ -38,7 +38,7 @@ def linux_cmake(branch, name, image, packages):
         "pull": "if-not-exists",
         "commands": [
           "cd ..",
-          f"git clone -b {branch} --depth 1 https://github.com/boostorg/boost.git",
+          "git clone -b {} --depth 1 https://github.com/boostorg/boost.git".format(branch),
           "cd boost",
           """git submodule update --init --depth 20 --jobs 4 \
               libs/array     \
