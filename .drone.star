@@ -44,7 +44,7 @@ def linux_cmake(name="", image="", packages=""):
 def main(ctx):
   return [
     linux_cmake(name="Ubunuto gcc 10",
-                image="cppalliance/droneubuntu1604:1",
+                image="cppalliance/droneubuntu1804:1",
                 packages="g++-10")
   ]
 #   return [
