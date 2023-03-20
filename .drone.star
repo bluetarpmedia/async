@@ -38,7 +38,7 @@ def linux_cmake(ctx, name, image, packages):
         "pull": "if-not-exists",
         "commands": [
           "cd ..",
-          "echo '" + ctx + "'"
+          "echo '" + ctx + "'",
           "git clone -b $branch --depth 1 https://github.com/boostorg/boost.git boost",
           "cd boost-root"
         ]
@@ -51,7 +51,7 @@ def linux_cmake(ctx, name, image, packages):
 def main(ctx):
   return [
     linux_cmake(ctx,
-                name="gcc 10 (ubuntu 22)",
+                name="gcc 10 (fedora 36)",
                 image="docker.io/library/fedora:36",
                 packages=["g++", "cmake", "git"])
   ]
