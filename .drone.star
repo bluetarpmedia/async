@@ -9,7 +9,7 @@ _triggers = {"branch": ["master", "develop", "drone*", "bugfix/*", "feature/*", 
 _container_tag = '65e51d3af7132dcb1001249629c24cc59b934cb6'
 
 
-def linux_cmake(image="", packages=""):
+def linux_cmake(name="", image="", packages=""):
   return {
     "name": name,
       "kind": "pipeline",
@@ -43,7 +43,8 @@ def linux_cmake(image="", packages=""):
 
 def main(ctx):
   return [
-    linux_cmake(image="cppalliance/droneubuntu1604:1",
+    linux_cmake(name="Ubunuto gcc 10",
+                image="cppalliance/droneubuntu1604:1",
                 packages="g++-10")
   ]
 #   return [
