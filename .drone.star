@@ -9,7 +9,7 @@ _triggers = {"branch": ["master", "develop", "drone*", "bugfix/*", "feature/*", 
 _container_tag = '65e51d3af7132dcb1001249629c24cc59b934cb6'
 
 
-def linux_cmake(name="", image="", packages=""):
+def linux_cmake(name, image, packages):
   return {
     "name": name,
       "kind": "pipeline",
@@ -25,10 +25,12 @@ def linux_cmake(name="", image="", packages=""):
       "node": {},
       "steps" : [
       {
-        "name": "Everything",
+        "name": "Install Cmake",
         "image": image,
-        "pull": "if-not-exists",
-        "commands": ["cmake"]
+        "pull": "",
+        "commands": [
+          "wget https://github.com/Kitware/CMake/releases/download/v3.26.0/cmake-3.26.0-linux-x86_64.sh"
+          "./cmake-3.26.0-linux-x86_64.sh"]
       }]
     }
 
