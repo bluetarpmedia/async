@@ -9,6 +9,19 @@ _triggers = {"branch": ["master", "develop", "drone*", "bugfix/*", "feature/*", 
 _container_tag = '65e51d3af7132dcb1001249629c24cc59b934cb6'
 
 
+def linux_cmake():
+  return {
+    "kind": "pipeline",
+    "name": "build",
+    "steps": [
+      {
+        "name": "build",
+        "image": "alpine",
+        "commands": [
+          "echo hello world"
+        ]
+      }
+    ]
 
 
 
