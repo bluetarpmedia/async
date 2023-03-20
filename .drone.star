@@ -9,7 +9,7 @@ _triggers = {"branch": ["master", "develop", "drone*", "bugfix/*", "feature/*", 
 _container_tag = '65e51d3af7132dcb1001249629c24cc59b934cb6'
 
 
-def linux_cmake(ctx, name, image, packages):
+def linux_cmake(branch, name, image, packages):
   return {
     "name": name,
       "kind": "pipeline",
@@ -38,9 +38,18 @@ def linux_cmake(ctx, name, image, packages):
         "pull": "if-not-exists",
         "commands": [
           "cd ..",
-          "echo '" + str(ctx) + "'",
-          "git clone -b $branch --depth 1 https://github.com/boostorg/boost.git boost",
-          "cd boost-root"
+          f"git clone -b {branch} --depth 1 https://github.com/boostorg/boost.git",
+          "cd boost",
+          """git submodule update --init --depth 20 --jobs 4 \
+              libs/array     \
+              libs/headers   \
+              libs/system    \
+              libs/container \
+              libs/asio      \
+              libs/core      \
+              libs/config    \
+              libs/assert
+          """
         ]
       }]
     }
@@ -49,8 +58,12 @@ def linux_cmake(ctx, name, image, packages):
 
 
 def main(ctx):
+  branch = ctx.build.branch
+  if branch != 'master' or branch != 'refs/heads/master':
+    branch = 'develop';
+
   return [
-    linux_cmake(ctx,
+    linux_cmake(branch=branch,
                 name="gcc 10 (fedora 36)",
                 image="docker.io/library/fedora:36",
                 packages=["g++", "cmake", "git"])
