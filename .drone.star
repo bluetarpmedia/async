@@ -44,8 +44,8 @@ def linux_cmake(name="", image="", packages=""):
 def main(ctx):
   return [
     linux_cmake(name="gcc 10 (ubuntu 22)",
-                image="cppalliance/droneubuntu2204",
-                packages="g++-10")
+                image="docker.io/library/gcc:10",
+                packages="cmake")
   ]
 #   return [
 #       # CMake Linux
