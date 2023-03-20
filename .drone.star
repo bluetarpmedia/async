@@ -9,25 +9,43 @@ _triggers = {"branch": ["master", "develop", "drone*", "bugfix/*", "feature/*", 
 _container_tag = '65e51d3af7132dcb1001249629c24cc59b934cb6'
 
 
-def linux_cmake():
+def linux_cmake(image="", packages=""):
   return {
-    "kind": "pipeline",
-    "name": "build",
-    "steps": [
+    "name": name,
+      "kind": "pipeline",
+      "type": "docker",
+      "trigger": _triggers,
+      "platform": {
+        "os": "linux",
+        "arch": "amd64"
+      },
+      "clone": {
+        "retries": 5
+      },
+      "node": {},
+      "steps" : [
       {
-        "name": "build",
-        "image": "alpine",
-        "commands": [
-          "echo hello world"
-        ]
-      }
-    ]
+        "name" : "install dependencies",
+        "image" : image,
+        "pull": "if-not-exists",
+        "commands": ["apt-get install " + packages]
+      },
+      {
+        "name": "Everything",
+        "image": image,
+        "pull": "if-not-exists",
+        "commands": ["exit 1"]
+      }]
+    }
 
 
 
 
 def main(ctx):
-  return []
+  return [
+    linux_cmake(image="cppalliance/droneubuntu1604:1",
+                packages="g++-10")
+  ]
 #   return [
 #       # CMake Linux
 #       linux_cmake('Linux CMake valgrind',       _image('build-gcc11'), valgrind=1, build_shared_libs=0),
