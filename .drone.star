@@ -24,17 +24,17 @@ def linux_cmake(name="", image="", packages=""):
       },
       "node": {},
       "steps" : [
-      {
-        "name" : "install dependencies",
-        "image" : image,
-        "pull": "if-not-exists",
-        "commands": ["apt-get install " + packages]
-      },
+#      {
+#        "name" : "install dependencies",
+#        "image" : image,
+#        "pull": "if-not-exists",
+#        "commands": ["apt-get install " + packages]
+#      },
       {
         "name": "Everything",
         "image": image,
         "pull": "if-not-exists",
-        "commands": ["exit 1"]
+        "commands": ["cmake"]
       }]
     }
 
@@ -43,9 +43,8 @@ def linux_cmake(name="", image="", packages=""):
 
 def main(ctx):
   return [
-    linux_cmake(name="Ubunuto gcc 10",
-                image="cppalliance/droneubuntu2004:1",
-                packages="g++-10")
+    linux_cmake(name="gcc 10",
+                image="gcc-10")
   ]
 #   return [
 #       # CMake Linux
