@@ -25,16 +25,10 @@ def linux_cmake(name="", image="", packages=""):
       "node": {},
       "steps" : [
       {
-        "name" : "install dependencies",
-        "image" : image,
-        "pull": "if-not-exists",
-        "commands": ["apt-get install " + packages]
-      },
-      {
         "name": "Everything",
         "image": image,
         "pull": "if-not-exists",
-        "commands": ["exit 1"]
+        "commands": ["cmake"]
       }]
     }
 
