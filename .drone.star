@@ -29,8 +29,9 @@ def linux_cmake(name, image, packages):
         "image": image,
         "pull": "",
         "commands": [
-          "wget https://github.com/Kitware/CMake/releases/download/v3.26.0/cmake-3.26.0-linux-x86_64.sh"
-          "./cmake-3.26.0-linux-x86_64.sh"]
+          "wget https://github.com/Kitware/CMake/releases/download/v3.26.0/cmake-3.26.0-linux-x86_64.sh",
+          "./cmake-3.26.0-linux-x86_64.sh"
+        ]
       }]
     }
 
