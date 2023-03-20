@@ -38,7 +38,7 @@ def linux_cmake(ctx, name, image, packages):
         "pull": "if-not-exists",
         "commands": [
           "cd ..",
-          "echo '" + ctx + "'",
+          "echo '" + str(ctx) + "'",
           "git clone -b $branch --depth 1 https://github.com/boostorg/boost.git boost",
           "cd boost-root"
         ]
